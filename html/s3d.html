@@ -1,0 +1,2079 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="author" content="Sebastian Rostock">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../../jsd/css/jsdoc.css">
+		<title>s3d</title>
+	</head>
+	<body class="langEN fontLC colorJD layoutJD staticSH genericsSH inheritedSH protectedSH">
+		<script src="../../jsd/src/jsd.js" type="text/javascript" ></script>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocB">
+	<fieldset>
+		<legend><span>s3d.js</span></legend>
+		<div>
+			<pre>[cc-by] 2010 Sebastian Rostock (bee-creative@gmx.de)</pre>
+			Dieses Werk ist unter einem <a href="http://creativecommons.org/licenses/by/3.0/de/" target="_blank">Creative Commons Namensnennung 3.0 Deutschland (CC BY 3.0)</a> Lizenzvertrag lizenziert. Um die Lizenz anzusehen, gehen Sie bitte zu:  [ http://creativecommons.org/licenses/by/3.0/de/ ] oder schicken Sie einen Brief an:  [ Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA. ]
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d">
+		<legend><span><a name="472f3s"></a><a href="#472f3s">s3d</a>()</span></legend>
+		<div>
+			<p><span lang="de"> Diese Bibliothek definiert einige Klassen zur Erstellung von animierbaren 3D-Szenen mit <code>SVG</code>. Sie hängt von der Bibliothek <code>pc</code> ab. </span><span lang="en"> This library defines some classes for creating animatable 3D-scenes with <code>SVG</code>. It depends on the library <code>pc</code>. </span></p><p><span lang="de"> Um den Namensraum nutzen zu können, ruft man einfach die Funktion <code>s3d</code> auf. Diese erstellt den Namensraum, ersetzt sich mit ihm und gibt ihn zurück. </span><span lang="en"> To be able use the name-space, one simply calls the function <code>s3d</code>. It creates the name-space, replaces itself with it and returns it. </span></p><p><span lang="de"> Das nun folgende Beispiel soll die Verwendung dieser Bibliothek illustrieren. Wie schon beschrieben, muss zuerst der Namensraum <code>s3d</code> initialisiert werden. </span><span lang="en"> The now following example should illustrate the usage of this library. Like already described, the name-space <code>s3d</code> has to be initialized first. </span><pre>s3d();</pre></p><p><span lang="de"> Für die Beschreibung von Szenenobjekten benötigt man Modelle von Elementknoten. Die hier verwendeten Modelle definieren <code>SVGCircleElement</code>- und <code>SVGPolygonElement</code>-Elementknoten in den Farben Weiß, Rot, Grün und Blau. </span><span lang="en"> For the description of scene-objects one needs models of element-nodes. The models used here define <code>SVGCircleElement</code>- and <code>SVGPolygonElement</code>-element-nodes in the colors white, red, green and blue. </span><pre>var circleModelA=new s3d.Model('svg:circle', {
+  'r':'0.08', 'fill':'rgb(255,255,255)', 'fill-opacity':'0.80', 'stroke':'rgb(127,127,127)', 'stroke-width':'0.02', 'stroke-opacity':'0.70', 'stroke-linejoin':'round', 'stroke-linecap':'round'
+},null);
+var circleModelB=new s3d.Model('svg:circle', {
+  'r':'0.08', 'fill':'rgb(255,0,0)', 'fill-opacity':'0.80', 'stroke':'rgb(127,0,0)', 'stroke-width':'0.02', 'stroke-opacity':'0.70', 'stroke-linejoin':'round', 'stroke-linecap':'round'
+}, null);
+var circleModelC=new s3d.Model('svg:circle', {
+  'r':'0.08', 'fill':'rgb(0,255,0)', 'fill-opacity':'0.80', 'stroke':'rgb(0,127,64)', 'stroke-width':'0.02', 'stroke-opacity':'0.70', 'stroke-linejoin':'round', 'stroke-linecap':'round'
+}, null);
+var circleModelD=new s3d.Model('svg:circle',{
+  'r':'0.08', 'fill':'rgb(0,0,255)', 'fill-opacity':'0.80', 'stroke':'rgb(0,0,127)', 'stroke-width':'0.02', 'stroke-opacity':'0.70', 'stroke-linejoin':'round', 'stroke-linecap':'round'
+}, null);
+var polygonModelA=new s3d.Model('svg:polygon', {
+  'fill':'rgb(255,255,255)', 'fill-opacity':'0.80', 'stroke':'rgb(127,127,127)', 'stroke-width':'0.02', 'stroke-opacity':'0.70', 'stroke-linejoin':'round', 'stroke-linecap':'round'
+}, null);
+var polygonModelB=new s3d.Model('svg:polygon', {
+  'fill':'rgb(255,0,0)', 'fill-opacity':'0.80', 'stroke':'rgb(127,0,0)', 'stroke-width':'0.02', 'stroke-opacity':'0.70', 'stroke-linejoin':'round', 'stroke-linecap':'round'
+}, null);
+var polygonModelC=new s3d.Model('svg:polygon', {
+  'fill':'rgb(0,255,0)', 'fill-opacity':'0.80', 'stroke':'rgb(0,127,64)', 'stroke-width':'0.02', 'stroke-opacity':'0.70', 'stroke-linejoin':'round', 'stroke-linecap':'round'
+}, null);
+var polygonModelD=new s3d.Model('svg:polygon', {
+  'fill':'rgb(0,0,255)', 'fill-opacity':'0.80', 'stroke':'rgb(0,0,127)', 'stroke-width':'0.02', 'stroke-opacity':'0.70', 'stroke-linejoin':'round', 'stroke-linecap':'round'
+}, null);</pre></p><p><span lang="de"> Um Szenenobjekte positionieren zu können, mussen sie Punkte besitzen, die über Matrizen transformiert werden. Die hier definierten Punkte entsprechen den Eckpunkten eines Tetraeders. </span><span lang="en"> In order to be able to position scene-objects, they must have points that are transformed via matrices. The points defined here correspond to the vertices of a tetrahedron. </span><pre>var pointA=new s3d.Point(0,0.5443310539518172,0,1);
+var pointB=new s3d.Point(-0.5,-0.2721655269759087,0.28867513459481287,1);
+var pointC=new s3d.Point(0.5,-0.2721655269759087,0.28867513459481287,1);
+var pointD=new s3d.Point(0,-0.2721655269759087,-0.5773502691896257,1);</pre></p><p><span lang="de"> Wie die transformierten Punkte eines Szenenobjektes auf seinen Elementknoten übertragen werden, wird durch einen Ereignisempfänger beschrieben. </span><span lang="en"> How the transformed points of an scene-object are transfered to its element-node, is determined by an event-listener. </span><pre>function onUpdateCircle(Node,Points){
+  Node.setValue('cx',Points[0].x).setValue('cy',Points[0].y);
+  return Points[0].z*3;
+}
+function onUpdatePolygon(Node,Points){
+  Node.setValue('points',[Points[0].x,Points[0].y,Points[1].x,Points[1].y,Points[2].x,Points[2].y].join(' '));
+  return Points[0].z+Points[1].z+Points[2].z;
+}</pre></p><p><span lang="de"> Aus den bisher definierten Werten können nun acht Objekte erzeugt werden, die den Seitenflächen und Eckpunkte des Tetraeders entsprechen. </span><span lang="en"> From the previously defined values now eight objects can be created, that correspond to the faces and vertices of the tetrahedron. </span><pre>var circleObjectA=new s3d.Object(circleModelA, [pointA], onUpdateCircle);
+var circleObjectB=new s3d.Object(circleModelB, [pointB], onUpdateCircle);
+var circleObjectC=new s3d.Object(circleModelC, [pointC], onUpdateCircle);
+var circleObjectD=new s3d.Object(circleModelD, [pointD], onUpdateCircle);
+var polygonObjectA=new s3d.Object(polygonModelA, [pointB, pointC, pointD], onUpdatePolygon);
+var polygonObjectB=new s3d.Object(polygonModelB, [pointA, pointD, pointC], onUpdatePolygon);
+var polygonObjectC=new s3d.Object(polygonModelC, [pointD, pointA, pointB], onUpdatePolygon);
+var polygonObjectD=new s3d.Object(polygonModelD, [pointC, pointB, pointA], onUpdatePolygon);</pre></p><p><span lang="de"> Als Nächstes folgt die Definition einiger Matrizen zur Positionierung der Szenenobjekte. </span><span lang="en"> Next is the definition of some matrices for positioning scene-objects. </span><pre>var circleMatrix=new s3d.Matrix().setScale(1.1, 1.1, 1.1);
+var polygonMatrix=new s3d.Matrix();
+var crossEyeLeftMatrix=new s3d.Matrix().setCommand('O', 0.5, 0.5, 0, 'R', 0, 1, 0, -0.08);
+var crossEyeRightMatrix=new s3d.Matrix().setCommand('O', 2.5, 0.5, 0, 'R', 0, 1, 0, 0.08);</pre></p><p><span lang="de"> Die nachfolgend definierten Szenengruppen ermöglichen die Anwendung der Matrizen auf die Szenenobjekte. </span><span lang="en"> The following defined scene-groups allows the application of the matrices to the scene-objects. </span><pre>var circleGroup=new s3d.Group(circleMatrix, null, [circleObjectA, circleObjectB, circleObjectC, circleObjectD]);
+var polygonGroup=new s3d.Group(polygonMatrix, [circleGroup], [polygonObjectA, polygonObjectB, polygonObjectC, polygonObjectD]);
+var crossEyeLeftGroup=new s3d.Group(crossEyeLeftMatrix, [polygonGroup], null);
+var crossEyeRightGroup=new s3d.Group(crossEyeRightMatrix, [polygonGroup], null);
+var crossEyeSceneGroup=new s3d.Group(null, [crossEyeLeftGroup, crossEyeRightGroup], null);</pre></p><p><span lang="de"> Zum Zeichnen dieser Szenengruppe wird nun eine Zeichenfläche definiert. </span><span lang="en"> To draw the scene-group now a surface is defined. </span><pre>var surface=new s3d.Surface('cross-eye-scene', crossEyeSceneGroup, false, true, false, 0);</pre></p><p><span lang="de"> Zur Anzeige der Zeichenfläche wird eine Leinwand erzeugt. </span><span lang="en"> To display the surface now a canvas is created. </span><pre>var canvas=new s3d.Canvas(3, 1, 0, [surface]);</pre><span lang="de"> An dieser Leinwand soll ein Ereignisempfänger für das Ereignisse <code>onMouseEnter</code> angehängt werden, welcher den Linienstil des unter dem Mauszeiger befindlichen Elementknotens verändern. </span><span lang="en"> To this canvas an event-listeners for the event <code>onMouseEnter</code> that change the stroke-style of the element-node under the cursor should be appended. </span><pre>var targetNode=null;
+function onMouseEnterCanvas(evt){
+  if(targetNode)targetNode.setValue('stroke-width','0.02').setValue('stroke-dasharray','0');
+  targetNode=evt.target.correspondingElement;
+  if(targetNode)targetNode.setValue('stroke-width','0.04').setValue('stroke-dasharray','0 0.04');
+}</pre></p><p><span lang="de"> Zum Schluss werden die Größe der Leinwand gesetzt, der Ereignisempfänger der Leinwand angehängt und der Elementknoten der Leinwand in die Webseite eingefügt werden. </span><span lang="en"> Finally, the size of the canvas is set, the event-listener is appended to the canvas and the element-node of the canvas is inserted into the web-page. </span><pre>document.getElementById('container').appendChild(canvas.node.setValues({
+  'width':'768', 'height':'256'
+}).setStyles({
+  'width':'768px', 'height':'256px', 'margin':'8px', 'outline':'black solid 1px'
+}).appendEvent(s3d.Event.onMouseEnter, onMouseEnterCanvas, false));</pre><span lang="de"> Diese Letze Zeile schließt das Beispiel für ein statisches Bild ab. </span><span lang="en"> This last line closes the example for a static image. </span></p><p><span lang="de"> Im Folgenden soll das begonnene Beispiel um animierte Änderung von Größe und Rotation der Szenengruppe <code>polygonGroup</code> erweitert werden. Für diese Änderungen werden Partikelvektoren mit Trägheits- und Reibungssimulation verwendet. Diese bestehen je aus einem Jetzt-, einem Ziel- und einem Geschwindigkeitswert. </span><span lang="en"> Here, the begun example is extended by animation of size and rotation of the scene-group <code>polygonGroup</code>. For these changes particle-vectors will be used for inertia- and friction-simulation. This vectors consist of a now-, a target- and a speed-value. </span><pre>var vectors=[[1, 1, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];</pre></p><p><span lang="de"> Die Zielwerte werden alle <code>1000</code> Millisekunden zufällig neun bestimmt. </span><span lang="en"> The target-values will be set to random values every <code>1000</code> milliseconds. </span><pre>setInterval(function(){
+  for(var i=0,size=vectors.length;i&lt;size;i++)vectors[i][1]=Math.random()-0.5;
+}, 1000);</pre></p><p><span lang="de"> Die Jetzt- und Geschwindigkeitswerte werden alle <code>15</code> Millisekunden neu berechnet. </span><span lang="en"> The now- and speed-values are recalculated every <code>15</code> milliseconds. </span><pre>setInterval(function(){
+  for(var i=0,size=vectors.length;i&lt;size;i++)vectors[i][0]+=(vectors[i][2]=vectors[i][2]*0.94+(vectors[i][1]-vectors[i][0])*0.006);
+}, 15);</pre></p><p><span lang="de"> Zum Schluss werden die Jetztwerte der Vektoren zur Berechnung der Matrix der Szenengruppe verwendet. Nach der Manipulation der Matrix werden die Knoten der Zeichenfläche aktualisiert. Dieser Prozess wiederholt sich alle <code>50</code> Millisekunden. </span><span lang="en"> Finally, the now-values of the vectors are used to calculate the matrix of the scene-group. After the manipulation of the matrix the nodes of the surface are updated. This process is repeated every <code>50</code> milliseconds. </span><pre>setInterval(function(){
+  var s=0.5+vectors[0][0]*0.6;
+  polygonMatrix.setCommand('R',0,0,1,vectors[1][0]*6.28,'R',0,1,0,vectors[2][0]*6.28,'R',1,0,0,vectors[3][0]*6.28,'S',s,s,s);
+  surface.update();
+}, 50);</pre></p><p><span lang="de"> Alles zusammen sieht dann so aus: </span><span lang="en"> All together looks like that: </span><a href="s3d-demo.html">s3d-demo.html</a>.</p>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>(): <a href="#443r">pc</a>.<a href="#443r2a363b">NS</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>&gt;</span> {</code><br>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x423p413t47">names</a>: <a href="#3b48463x423v">String</a>[]{}<br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3p4444404d38433x4248">applyPoint</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3p4444404d353p48463x4c">applyMatrix</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3r3w3p3x42343p4748">chainLast</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3r3w3p3x42363t4c48">chainNext</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3r4341413p423s353p44">commandMap</a>: <a href="#3b48463x423v">String</a>{}<br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3r4341413p423s343p4748">commandLast</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3r4341413p423s363t4c48">commandNext</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3r4341413p423s3c3w3x47">commandThis</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3r3p424a3p4735433s3t40">canvasModel</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x4749463u3p3r3t3a3t3p4035433s3t40">surfaceRealModel</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x4749463u3p3r3t3e3x4648493p4035433s3t40">surfaceVirtualModel</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x4749463u3p3r3t2v4341443p463t37463s3t46">surfaceCompareOrder</a>(First, Second: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>): <a href="#3649413q3t46">Number</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x4749463u3p3r3t2z3t423t463p483t2v3p3r3w3t">surfaceGenerateCache</a>(Cache: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t">CacheSurface</a>; Skip: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>; Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>; Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; NoJoin: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t2z46434944">CacheGroup</a>[]<br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3r43444d">copy</a>(This, Data: <a href="#373q3y3t3r48">Object</a>{}): <a href="#373q3y3t3r48">Object</a>{}<br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x423p413t373u">nameOf</a>(Key: <a href="#3b48463x423v">String</a>): <a href="#3b48463x423v">String</a>[]<br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3d473t462w3p483p">UserData</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code class="jsdocP">&nbsp;&nbsp;- <a href="#472f3s2b3x3b3z3x4435433s3t">SkipMode</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#443r2a363b2b3u">(</a><a href="#443r2a363b2b3u">)</a>: <a href="#472f3s">s3d</a> // <a href="#443r">pc</a>.<a href="#443r2a363b">NS</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b433b3331383n2t3838343h">SKIP_APPLY</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b433b3331383n3d382w2t3c2x">SKIP_UPDATE</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b433b3331383n2w313b38342t3h">SKIP_DISPLAY</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b432x4a3t4248">Event</a>: <a href="#3b48463x423v">String</a>{}<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b43363p413t3b443p3r3t">NameSpace</a>: <a href="#3b48463x423v">String</a>{}<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b432u3p473t">Base</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b433c3t4c48">Text</a>(Text: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3c3t4c48">Text</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b4336433s3t">Node</a>(Name, NameSpace: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b4335433s3t40">Model</a>(Name: <a href="#3b48463x423v">String</a>; Values: <a href="#3b48463x423v">String</a>{}; Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b4338433x4248">Point</a>(X, Y, Z, I: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b43353p48463x4c">Matrix</a>(XX, XY, XZ, XI, YX, YY, YZ, YI, ZX, ZY, ZZ, ZI, IX, IY, IZ, II: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b432z46434944">Group</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; Groups: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b43373q3y3t3r48">Object</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]; OnUpdate: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b432v3p424a3p47">Canvas</a>(Width, Height, Index: <a href="#3649413q3t46">Number</a>; Surfaces: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b433b49463u3p3r3t">Surface</a>(Id: <a href="#3b48463x423v">String</a>; Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>; Virtual, NoClip, NoJoin, NoSkip: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b432v3p3r3w3t373q3y3t3r48">CacheObject</a>(Index: <a href="#3649413q3t46">Number</a>; Object: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b432v3p3r3w3t3b49463u3p3r3t">CacheSurface</a>(Skips: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>&gt;</span>[]; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>&gt;</span>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>[]; Matrices: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>&gt;</span>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t">CacheSurface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2b432v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;GParent; GValue&gt;</span>(Parent: GParent; Source, Target: GValue): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;GParent; GValue&gt;</span><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x423p413t47">names</a>: <a href="#3b48463x423v">String</a>[]{}</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Graph der Methode <code>nameOf()</code>. </span><span lang="en"> This field stores the graph of the method <code>nameOf()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3p4444404d38433x4248">applyPoint</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert einen Hilfspunkt für die Methode <code>s3d.Matrix.applyToPoint()</code>. </span><span lang="en"> This field stores a helper-point for the method <code>s3d.Matrix.applyToPoint()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3p4444404d353p48463x4c">applyMatrix</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert einen Hilfsmatrix für die Methode <code>s3d.Matrix.applyToMatrix()</code>. </span><span lang="en"> This field stores a helper-matrix for the method <code>s3d.Matrix.applyToMatrix()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3r3w3p3x42343p4748">chainLast</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert einen Hilfsmatrix für die Methode <code>s3d.Matrix.setChain()</code>. </span><span lang="en"> This field stores a helper-matrix for the method <code>s3d.Matrix.setChain()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3r3w3p3x42363t4c48">chainNext</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert einen Hilfsmatrix für die Methode <code>s3d.Matrix.setChain()</code>. </span><span lang="en"> This field stores a helper-matrix for the method <code>s3d.Matrix.setChain()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3r4341413p423s353p44">commandMap</a>: <a href="#3b48463x423v">String</a>{}</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld bildent Befehle auf Methodennamen ab. </span><span lang="en"> This field maps commands onto method-names. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3r4341413p423s343p4748">commandLast</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert einen Hilfsmatrix für die Methode <code>s3d.Matrix.setCommand()</code>. </span><span lang="en"> This field stores a helper-matrix for the method <code>s3d.Matrix.setCommand()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3r4341413p423s363t4c48">commandNext</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert einen Hilfsmatrix für die Methode <code>s3d.Matrix.setCommand()</code>. </span><span lang="en"> This field stores a helper-matrix for the method <code>s3d.Matrix.setCommand()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3r4341413p423s3c3w3x47">commandThis</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert einen Hilfsmatrix für die Methode <code>s3d.Matrix.setCommand()</code>. </span><span lang="en"> This field stores a helper-matrix for the method <code>s3d.Matrix.setCommand()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3r3p424a3p4735433s3t40">canvasModel</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert das Model des Knotens einer Leinwand. </span><span lang="en"> This field stores the model of the node of a canvas. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x4749463u3p3r3t3a3t3p4035433s3t40">surfaceRealModel</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert das Model eines Knotens für eine nicht-virtuelle Zeichenfläche. </span><span lang="en"> This field stores the model of the node for a not-virtual surface. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x4749463u3p3r3t3e3x4648493p4035433s3t40">surfaceVirtualModel</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert das Model eines Knotens für eine virtuelle Zeichenfläche. </span><span lang="en"> This field stores the model of the node for a virtual surface. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x4749463u3p3r3t2v4341443p463t37463s3t46">surfaceCompareOrder</a>(First, Second: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>): <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode vergleicht zwei Zeichencacheobjekte nach ihrer Zeichenreigenfolge. </span><span lang="en"> This method compares two render-cache-objects by their render-order. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x4749463u3p3r3t2z3t423t463p483t2v3p3r3w3t">surfaceGenerateCache</a>(Cache: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t">CacheSurface</a>; Skip: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>; Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>; Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; NoJoin: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t2z46434944">CacheGroup</a>[]</span></legend>
+						<div>
+							<span lang="de"> Diese Methode generiert den Cache einer Zeichenfläche. </span><span lang="en"> This method generates the cache of a surface. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3r43444d">copy</a>(This, Data: <a href="#373q3y3t3r48">Object</a>{}): <a href="#373q3y3t3r48">Object</a>{}</span></legend>
+						<div>
+							<span lang="de"> Diese Methode kopiert alle Mitglieder von <code>Data</code> nach <code>This</code> und gibt <code>This</code> zurück. </span><span lang="en"> This method copies all members from <code>Data</code> to <code>This</code> and returns <code>This</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x423p413t373u">nameOf</a>(Key: <a href="#3b48463x423v">String</a>): <a href="#3b48463x423v">String</a>[]</span></legend>
+						<div>
+							<span lang="de"> Diese Methode gibt eine Liste bestehend aus einem Namensraum und einem Namen zurück. Das Argument <code>Key</code> hat dabei die Form <code>'NAMESPACEKEY:NAME'</code>, wobei <code>NAME</code> den Namen angibt und <code>NAMESPACEKEY</code> als Schlüssel in <code>s3d.NameSpace</code> den Namensraum bestimmt. Die zurück gegebene Liste wird dabei auch unter dem Schlüssel <code>Key</code> in die Abbildung <code>names</code> eingetragen. </span><span lang="en"> This method returns a lists consisting of a name-space and a name. The argument <code>Key</code> has the form <code>'NAMESPACEKEY:NAME'</code>, where <code>NAME</code> defines the namen and <code>NAMESPACEKEY</code> as key for <code>s3d.NameSpace</code> determines the name-space. The returned list is also appended into the map <code>names</code> with the key <code>Key</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3d473t462w3p483p">UserData</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a></span></legend>
+						<div>
+							<span lang="de"> Diese Schnittstelle definiert die Nutzerdateneigenschaft. </span><span lang="en"> This interface defines the user-data-property. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocP">
+					<fieldset>
+						<legend><span>- <a name="472f3s2b3x3b3z3x4435433s3t">SkipMode</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a></span></legend>
+						<div>
+							<span lang="de"> Diese Schnittstelle definiert die Auslassmoduseigenschaft. </span><span lang="en"> This interface defines the skip-mode-property. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b433b3331383n2t3838343h">SKIP_APPLY</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld identifiziert die Markierung für das Auslassen von Transformationen (<code>s3d.Matrix.applyToPoint</code>/<code>s3d.Matrix.applyToMatrix</code>). Sein Wert ist <code>1</code>. </span><span lang="en"> This field identifies the flag for skipping transformations (<code>s3d.Matrix.applyToPoint</code>/<code>s3d.Matrix.applyToMatrix</code>). Its value is <code>1</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b433b3331383n3d382w2t3c2x">SKIP_UPDATE</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld identifiziert die Markierung für das Auslassen von Szenenobjektaktualisierungen (<code>s3d.Object.onUpdate</code>). Sein Wert ist <code>2</code>. </span><span lang="en"> This field identifies the flag for skipping point-transformations and scene-object-updates (<code>s3d.Object.onUpdate</code>). Its value is <code>2</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b433b3331383n2w313b38342t3h">SKIP_DISPLAY</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld identifiziert die Markierung für das Auslassen der Szenenobjektanzeige. Sein Wert ist <code>4</code>. </span><span lang="en"> This field identifies the flag for skipping the scene-object displaying. Its value is <code>4</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b432x4a3t4248">Event</a>: <a href="#3b48463x423v">String</a>{}</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld bildet Namen auf <code>DOMEvent</code>-Ereignistypen ab. Es hat den Wert </span><span lang="en"> This field maps names onto <code>DOMEvent</code>-event-types. Its value is </span><code>{ onClick: 'click', onMouseDown: 'mousedown', onMouseUp: 'mouseup', onMouseEnter: 'mouseover', onMouseMove: 'mousemove', onMouseLeave: 'mouseout', onMouseWheel: 'mousewheel', onZoom: 'SVGZoom', onLoad: 'SVGLoad', onUnload: 'SVGUnload', onAbort: 'SVGAbort', onError: 'SVGError', onResize: 'SVGResize', onScroll: 'SVGScroll', onActivate: 'DOMActivate', onFocusEnter: 'DOMFocusIn', onFocusLeave: 'DOMFocusOut', onNodeRemoved: 'DOMNodeRemoved', onNodeRemovedFromDocument: 'DOMNodeRemovedFromDocument', onNodeInserted: 'DOMNodeInserted', onNodeInsertedIntoDocument: 'DOMNodeInsertedIntoDocument', onSubtreeModified: 'DOMSubtreeModified', onAttributeModified: 'DOMAttrModified', onCharacterdataModified: 'DOMCharacterDataModified' }</code>.
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b43363p413t3b443p3r3t">NameSpace</a>: <a href="#3b48463x423v">String</a>{}</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld bildet Namen auf <code>XML</code>-Namensräume ab. Es hat den Wert </span><span lang="en"> This field maps names onto <code>XML</code>-name-spaces. Its value is </span><code>{ svg: 'http://www.w3.org/2000/svg', xhtml: 'http://www.w3.org/1999/xhtml', xlink: 'http://www.w3.org/1999/xlink' }</code>.
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b432u3p473t">Base</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert die Basis für Szenenobjekte und Szenengruppen mit Auslassmodus und Nutzerdaten. </span><span lang="en"> This class defines the base for scene-objects and scene-groups with skip-mode and user-data. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b433c3t4c48">Text</a>(Text: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3c3t4c48">Text</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert einen Textknoten. </span><span lang="en"> This class defines a text-node. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b4336433s3t">Node</a>(Name, NameSpace: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert einen Elementknoten. </span><span lang="en"> This class defines an element-node. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b4335433s3t40">Model</a>(Name: <a href="#3b48463x423v">String</a>; Values: <a href="#3b48463x423v">String</a>{}; Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert das Model eines Elementknoten. </span><span lang="en"> This class defines the model of an element-node. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b4338433x4248">Point</a>(X, Y, Z, I: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert einen vierdimensionalen Punkt. </span><span lang="en"> This class defines a four-dimensional point. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b43353p48463x4c">Matrix</a>(XX, XY, XZ, XI, YX, YY, YZ, YI, ZX, ZY, ZZ, ZI, IX, IY, IZ, II: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert einen vierdimensionale Transformationsmatrix. </span><span lang="en"> This class defines a four-dimensional transformation-matrix. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b432z46434944">Group</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; Groups: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert eine Szenengruppe zur Erstellung von Szenenbäumen. </span><span lang="en"> This class defines a scene-group for creating scene-trees. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b43373q3y3t3r48">Object</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]; OnUpdate: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert ein Szenenobjekt. </span><span lang="en"> This class defines a scene-object. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b432v3p424a3p47">Canvas</a>(Width, Height, Index: <a href="#3649413q3t46">Number</a>; Surfaces: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert eine Leinwand, die mehrere Zeichenflächen besitzen und eine davon anzeigen kann. </span><span lang="en"> This class defines a canvas that owns multiple surfaces and that can show one of them. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b433b49463u3p3r3t">Surface</a>(Id: <a href="#3b48463x423v">String</a>; Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>; Virtual, NoClip, NoJoin, NoSkip: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert eine Zeichenfläche, die eine Szenengruppe anzeigen kann </span><span lang="en"> This class defines a surface that can show a scene-group. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b432v3p3r3w3t373q3y3t3r48">CacheObject</a>(Index: <a href="#3649413q3t46">Number</a>; Object: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert eine optimierte Zugriffsstruktur auf ein zu verarbeitendes Szenenobjek im Cache einer Zeichenfläche. </span><span lang="en"> This class defines an optimised access-structure on a scene-object to be processed in the cache of a surface. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b432v3p3r3w3t3b49463u3p3r3t">CacheSurface</a>(Skips: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>&gt;</span>[]; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>&gt;</span>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>[]; Matrices: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>&gt;</span>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t">CacheSurface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert einen optimierte Zugriffsstruktur auf die während der Aktualisierung einer Zeichenfläche zu verarbeitenden Objekte und Operationen. </span><span lang="en"> This class defines an optimised access-structure on the objects and operations to be processed while updating a surface. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2b432v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;GParent; GValue&gt;</span>(Parent: GParent; Source, Target: GValue): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;GParent; GValue&gt;</span></span></legend>
+						<div>
+							<span lang="de"> Diese Klasse definiert eine Operation. </span><span lang="en"> This class defines an operation. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Base">
+		<legend><span><a name="472f3s2a2u3p473t"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a>()</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert die Basis für Szenenobjekte und Szenengruppen mit Auslassmodus und Nutzerdaten. </span><span lang="en"> This class defines the base for scene-objects and scene-groups with skip-mode and user-data. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>, <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> {</code><br>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3b3z3x4435433s3t2b43473z3x4435433s3t">skipMode</a>: <a href="#3649413q3t46">Number</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b4349473t462w3p483p">userData</a>: <a href="#373q3y3t3r48">Object</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b43473t483d473t462w3p483p">setUserData</a>(UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2u3p473t2b43473t483b3z3x4435433s3t">setSkipMode</a>(SkipMode: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2u3p473t2b43473t483b3z3x4435433s3t">setSkipMode</a>(SkipMode: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt de Auslassmodus und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the skip-mode and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Text">
+		<legend><span><a name="472f3s2a3c3t4c48"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a3c3t4c48">Text</a>(Text: <a href="#3b48463x423v">String</a>)</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert einen Textknoten. Das Konstrukteurargument <code>Text</code> initialisiert den Knotenwert. </span><span lang="en"> This class defines a text-node. The constructor-argument <code>Text</code> initiates the node-value. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a3c3t4c48">Text</a>(Text: <a href="#3b48463x423v">String</a>): <a href="#2w37353c3t4c48">DOMText</a> {</code><br>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Node">
+		<legend><span><a name="472f3s2a36433s3t"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a>(Name, NameSpace: <a href="#3b48463x423v">String</a>)</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert einen Elementknoten. Die Konstrukteurargumente <code>Name</code> und <code>NameSpace</code> definieren den Knotennamen und seinen Namensraum. Wenn <code>NameSpace</code> nicht undefiniert ist, wird <code>Name</code> mit der Methode <code>nameOf()</code> in einen Namen mit Namensraum konvertiert. </span><span lang="en"> This class defines an element-node. The constructor-arguments <code>Name</code> and <code>NameSpace</code> define the node-name and its name-space. if <code>NameSpace</code> is undefined, <code>Name</code> is converted into a name with name-space via the method <code>nameOf()</code>. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a>(Name, NameSpace: <a href="#3b48463x423v">String</a>): <a href="#2w37352x403t413t4248">DOMElement</a>, <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> {</code><br>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b4349473t462w3p483p">userData</a>: <a href="#373q3y3t3r48">Object</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b43473t483d473t462w3p483p">setUserData</a>(UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433p47473x3v4236433s3t47">assignNodes</a>(Nodes: <a href="#2w373536433s3t">DOMNode</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433s3t403t483t36433s3t47">deleteNodes</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433p44443t423s36433s3t">appendNode</a>(Node: <a href="#2w373536433s3t">DOMNode</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433p44443t423s36433s3t47">appendNodes</a>(Nodes: <a href="#2w373536433s3t">DOMNode</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b43463t41434a3t36433s3t">removeNode</a>(Node: <a href="#2w373536433s3t">DOMNode</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b43463t41434a3t36433s3t47">removeNodes</a>(Nodes: <a href="#2w373536433s3t">DOMNode</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433p44443t423s2x4a3t4248">appendEvent</a>(Type: <a href="#3b48463x423v">String</a>; Method: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>; Capture: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433p44443t423s2x4a3t424847">appendEvents</a>(Methods: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}; Capture: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b43463t41434a3t2x4a3t4248">removeEvent</a>(Type: <a href="#3b48463x423v">String</a>; Method: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>; Capture: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b43463t41434a3t2x4a3t424847">removeEvents</a>(Methods: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}; Capture: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433v3t483e3p40493t">getValue</a>(Key: <a href="#3b48463x423v">String</a>): <a href="#3b48463x423v">String</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433v3t483e3p40493t47">getValues</a>(Keys: <a href="#3b48463x423v">String</a>[]): <a href="#3b48463x423v">String</a>{}<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b43473t483e3p40493t">setValue</a>(Key, Value: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b43473t483e3p40493t47">setValues</a>(Values: <a href="#3b48463x423v">String</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433v3t483b484d403t">getStyle</a>(Key: <a href="#3b48463x423v">String</a>): <a href="#3b48463x423v">String</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b433v3t483b484d403t47">getStyles</a>(Keys: <a href="#3b48463x423v">String</a>[]): <a href="#3b48463x423v">String</a>{}<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b43473t483b484d403t">setStyle</a>(Key, Style: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a36433s3t2b43473t483b484d403t47">setStyles</a>(Styles: <a href="#3b48463x423v">String</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433p47473x3v4236433s3t47">assignNodes</a>(Nodes: <a href="#2w373536433s3t">DOMNode</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode entfernt alle Kindknoten, fügt die Kindknoten <code>Nodes</code> hinzu und gibt <code>this</code> zurück. </span><span lang="en"> This method removes all child-nodes, appends the child-nodes <code>Nodes</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433s3t403t483t36433s3t47">deleteNodes</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode entfernt alle Kindknoten und gibt <code>this</code> zurück. </span><span lang="en"> This method removes all child-nodes and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433p44443t423s36433s3t">appendNode</a>(Node: <a href="#2w373536433s3t">DOMNode</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode fügt den Kindknoten <code>Node</code> hinzu und gibt <code>this</code> zurück. </span><span lang="en"> This method appends the child-node <code>Node</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433p44443t423s36433s3t47">appendNodes</a>(Nodes: <a href="#2w373536433s3t">DOMNode</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode fügt die Kindknoten <code>Nodes</code> hinzu und gibt <code>this</code> zurück. </span><span lang="en"> This method appends the child-nodes <code>Nodes</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b43463t41434a3t36433s3t">removeNode</a>(Node: <a href="#2w373536433s3t">DOMNode</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode entfernt den Kindknoten <code>Node</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method removes the child-node <code>Node</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b43463t41434a3t36433s3t47">removeNodes</a>(Nodes: <a href="#2w373536433s3t">DOMNode</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode entfernt die Kindknoten <code>Nodes</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method removes the child-nodes <code>Nodes</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433p44443t423s2x4a3t4248">appendEvent</a>(Type: <a href="#3b48463x423v">String</a>; Method: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>; Capture: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode fügt den Ereignisempfänger <code>Method</code> des Typs <code>Type</code> im Modus <code>Capture</code> hinzu und gibt <code>this</code> zurück. Gültige Typen sind in den Schlüsseln und Werten der Abbildung <code>s3d.Event</code> gespeichert. </span><span lang="en"> This method appends the event-listener <code>Method</code> of type <code>Type</code> in mode <code>Capture</code> and returns <code>this</code>. Valid types are stores in the keys and values of the map <code>s3d.Event</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433p44443t423s2x4a3t424847">appendEvents</a>(Methods: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}; Capture: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode fügt die Ereignisempfänger <code>Methods</code> im Modus <code>Capture</code> hinzu und gibt <code>this</code> zurück. Die Schlüssel der Ereignisempfänger in <code>Methods</code> definieren deren Typ. </span><span lang="en"> This method appends the event-listeners <code>Methods</code> in mode <code>Capture</code> and returns <code>this</code>. The keys of the event-listeners in <code>Methods</code> define theit type. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b43463t41434a3t2x4a3t4248">removeEvent</a>(Type: <a href="#3b48463x423v">String</a>; Method: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>; Capture: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode entfernt den Ereignisempfänger <code>Method</code> des Typs <code>Type</code> im Modus <code>Capture</code> und gibt <code>this</code> zurück. Gültige Typen sind in den Schlüsseln und Werten der Abbildung <code>s3d.Event</code> gespeichert. </span><span lang="en"> This method removes the event-listener <code>Method</code> of type <code>Type</code> in mode <code>Capture</code> and returns <code>this</code>. Valid types are stores in the keys and values of the map <code>s3d.Event</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b43463t41434a3t2x4a3t424847">removeEvents</a>(Methods: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}; Capture: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode entfernt die Ereignisempfänger <code>Methods</code> im Modus <code>Capture</code> und gibt <code>this</code> zurück. Die Schlüssel der Ereignisempfänger in <code>Methods</code> definieren deren Typ. </span><span lang="en"> This method removes the event-listeners <code>Methods</code> in mode <code>Capture</code> and returns <code>this</code>. The keys of the event-listeners in <code>Methods</code> define theit type. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433v3t483e3p40493t">getValue</a>(Key: <a href="#3b48463x423v">String</a>): <a href="#3b48463x423v">String</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode gibt den Wert des Attributes <code>Key</code> zurück. Für Attribute mit Namensraum wird das Argument <code>Key</code> über die Methode <code>nameOf()</code> in einen Attributname mit Namensraum konvertiert. </span><span lang="en"> This method returns the value of the attribute <code>Key</code>. For attributes with name-space the argument <code>Key</code> is converted to an attribute-name with name-space via the method <code>nameOf()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433v3t483e3p40493t47">getValues</a>(Keys: <a href="#3b48463x423v">String</a>[]): <a href="#3b48463x423v">String</a>{}</span></legend>
+						<div>
+							<span lang="de"> Diese Methode gibt die Werte der Attributes <code>Keys</code> zurück. </span><span lang="en"> This method returns the values of the attributes <code>Keys</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b43473t483e3p40493t">setValue</a>(Key, Value: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Wert des Attributes <code>Key</code> auf <code>Value</code> und gibt <code>this</code> zurück. Für Attribute mit Namensraum wird das Argument <code>Key</code> über die Methode <code>nameOf()</code> in einen Attributname mit Namensraum konvertiert. </span><span lang="en"> This method sets the value of the attribute <code>Key</code> to <code>Value</code> and returns <code>this</code>. For attributes with name-space the argument <code>Key</code> is converted to an attribute-name with name-space via the method <code>nameOf()</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b43473t483e3p40493t47">setValues</a>(Values: <a href="#3b48463x423v">String</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Werte der Attribute auf <code>Values</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the values of the attributes to <code>Values</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433v3t483b484d403t">getStyle</a>(Key: <a href="#3b48463x423v">String</a>): <a href="#3b48463x423v">String</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode gibt den Wert des Stils <code>Key</code> zurück. </span><span lang="en"> This method returns the value of the style <code>Key</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b433v3t483b484d403t47">getStyles</a>(Keys: <a href="#3b48463x423v">String</a>[]): <a href="#3b48463x423v">String</a>{}</span></legend>
+						<div>
+							<span lang="de"> Diese Methode gibt die Werte der Stile <code>Keys</code> zurück. </span><span lang="en"> This method returns the values of the style <code>Keys</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b43473t483b484d403t">setStyle</a>(Key, Style: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Wert des Stils <code>Key</code> auf <code>Style</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the value of the style <code>Key</code> to <code>Style</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a36433s3t2b43473t483b484d403t47">setStyles</a>(Styles: <a href="#3b48463x423v">String</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Werte der Stile auf <code>Values</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the values of the style to <code>Values</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Model">
+		<legend><span><a name="472f3s2a35433s3t40"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>(Name: <a href="#3b48463x423v">String</a>; Values: <a href="#3b48463x423v">String</a>{}; Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[])</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert das Model eines Elementknoten. Die Konstrukteurargumente initialisieren die entsprechenden Felder. </span><span lang="en"> This class defines the model of an element-node. The constructor-arguments initiate the correspondung fields. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>(Name: <a href="#3b48463x423v">String</a>; Values: <a href="#3b48463x423v">String</a>{}; Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> {</code><br>
+					<code class="jsdocS">&nbsp;&nbsp;= <a href="#472f3s2a35433s3t402b3r484336433s3t">toNode</a>(Model: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>): <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3c3t4c48">Text</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a>&gt;</span><br></code>
+					<code class="jsdocS">&nbsp;&nbsp;= <a href="#472f3s2a35433s3t402b3r484336433s3t47">toNodes</a>(Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]): <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3c3t4c48">Text</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a>&gt;</span>[]<br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b4349473t462w3p483p">userData</a>: <a href="#373q3y3t3r48">Object</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43423p413t">name</a>: <a href="#3b48463x423v">String</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b434a3p40493t47">values</a>: <a href="#3b48463x423v">String</a>{}<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b4341433s3t4047">models</a>: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b4347484d403t47">styles</a>: <a href="#3b48463x423v">String</a>{}<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b433q493q3q403t2x4a3t424847">bubbleEvents</a>: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b433r3p444849463t2x4a3t424847">captureEvents</a>: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}<br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b43473t483d473t462w3p483p">setUserData</a>(UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43473t48">set</a>(Name: <a href="#3b48463x423v">String</a>; Values: <a href="#3b48463x423v">String</a>{}; Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]; Styles: <a href="#3b48463x423v">String</a>{}; BubbleEvents, CaptureEvents: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}; UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43473t48363p413t">setName</a>(Name: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43473t483e3p40493t47">setValues</a>(Values: <a href="#3b48463x423v">String</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43473t4835433s3t4047">setModels</a>(Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43473t483b484d403t47">setStyles</a>(Styles: <a href="#3b48463x423v">String</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43473t482u493q3q403t2x4a3t424847">setBubbleEvents</a>(BubbleEvents: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43473t482v3p444849463t2x4a3t424847">setCaptureEvents</a>(CaptureEvents: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a35433s3t402b43473t4835433s3t40">setModel</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM jsdocS">
+					<fieldset>
+						<legend><span>= <a name="472f3s2a35433s3t402b3r484336433s3t">toNode</a>(Model: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>): <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3c3t4c48">Text</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a>&gt;</span></span></legend>
+						<div>
+							<span lang="de"> Diese Methode erstellt aus <code>Model</code> einen Elementknoten und gibt diesen zurück. Wenn <code>Model</code> eine <code>s3d.Model</code>-instanz ist, wird eine <code>s3d.Node</code>-Instanz erstellt. Anderenfalls wird eine <code>s3d.Text</code>-Instanz erstellt. </span><span lang="en"> This method creates an element-node out of <code>Model</code> and returns it. If <code>Model</code> is a <code>s3d.Model</code>-instance, a <code>s3d.Node</code>-instance will be created. Otherwise a <code>s3d.Text</code>-instance will be created. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM jsdocS">
+					<fieldset>
+						<legend><span>= <a name="472f3s2a35433s3t402b3r484336433s3t47">toNodes</a>(Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]): <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3c3t4c48">Text</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a>&gt;</span>[]</span></legend>
+						<div>
+							<span lang="de"> Diese Methode erstellt aus <code>Models</code> eine Knotenliste und gibt diese zurück. </span><span lang="en"> This method creates a node-list out of <code>Models</code> and returns it. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43423p413t">name</a>: <a href="#3b48463x423v">String</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Knotennamen im Format <code>'NAME'</code> ohne <code>'NAMESPACEKEY:NAME'</code>. </span><span lang="en"> This field stores the node-name in format <code>'NAME'</code> or <code>'NAMESPACEKEY:NAME'</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b434a3p40493t47">values</a>: <a href="#3b48463x423v">String</a>{}</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Werte der Attribute. </span><span lang="en"> This field stores the values of the attributes. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b4341433s3t4047">models</a>: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Modelle der Kindknoten. </span><span lang="en"> This field stores the models of the child-nodes. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b4347484d403t47">styles</a>: <a href="#3b48463x423v">String</a>{}</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Werte der Stile. </span><span lang="en"> This field stores the values of the styles. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b433q493q3q403t2x4a3t424847">bubbleEvents</a>: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die aufsteigenden Ereignisempfänger. </span><span lang="en"> This field stores the bubbling event-listeners. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b433r3p444849463t2x4a3t424847">captureEvents</a>: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die absteigenden Ereignisempfänger. </span><span lang="en"> This field stores the capturing event-listeners. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43473t48">set</a>(Name: <a href="#3b48463x423v">String</a>; Values: <a href="#3b48463x423v">String</a>{}; Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]; Styles: <a href="#3b48463x423v">String</a>{}; BubbleEvents, CaptureEvents: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}; UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Knotennamen, die Werte der Attribute, die Modelle der Kindknoten, die Werte der Stile, absteigende und aufsteigende Ereignisempfänger sowie die Nutzerdaten und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the node-name, the values of the attributes, the models of the child-nodes, the values of the styles, bubbling and capturing event-listeners as well as the user-data and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43473t48363p413t">setName</a>(Name: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Knotennamen und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the node-name and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43473t483e3p40493t47">setValues</a>(Values: <a href="#3b48463x423v">String</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Werte der Attribute und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the values of the attributes and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43473t4835433s3t4047">setModels</a>(Models: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>&gt;</span>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Modelle der Kindknoten und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the models of the child-nodes and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43473t483b484d403t47">setStyles</a>(Styles: <a href="#3b48463x423v">String</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Werte der Stile und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the values of the styles and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43473t482u493q3q403t2x4a3t424847">setBubbleEvents</a>(BubbleEvents: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die absteigenden Ereignisempfänger und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the bubbling event-listeners and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43473t482v3p444849463t2x4a3t424847">setCaptureEvents</a>(CaptureEvents: <a href="#2w37352x4a3t4248343x47483t423t46">DOMEventListener</a>{}): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die aufsteigenden Ereignisempfänger und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the capturing event-listeners and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a35433s3t402b43473t4835433s3t40">setModel</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Felder auf die entsprechenden Werte von <code>Model</code> zu und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the fields to the corresponding values of <code>Model</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Point">
+		<legend><span><a name="472f3s2a38433x4248"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>(X, Y, Z, I: <a href="#3649413q3t46">Number</a>)</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert einen vierdimensionalen Punkt. Die Konstrukteurargumente initialisieren die entsprechenden Komponenten. </span><span lang="en"> This class defines a four-dimensional point. The constructor-arguments initiate the corresponding components. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>(X, Y, Z, I: <a href="#3649413q3t46">Number</a>): <a href="#373q3y3t3r48">Object</a> {</code><br>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a38433x42482b434c">x</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a38433x42482b434d">y</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a38433x42482b434e">z</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a38433x42482b433x">i</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a38433x42482b43473t48">set</a>(X, Y, Z, I: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a38433x42482b43473t4838433x4248">setPoint</a>(Point: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a38433x42482b433r403x4431">clipI</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a38433x42482b434c">x</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die <code>X</code>-Komponente. </span><span lang="en"> This field stores the <code>x</code>-component. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a38433x42482b434d">y</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die <code>Y</code>-Komponente. </span><span lang="en"> This field stores the <code>y</code>-component. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a38433x42482b434e">z</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die <code>Z</code>-Komponente. </span><span lang="en"> This field stores the <code>z</code>-component. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a38433x42482b433x">i</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die <code>I</code>-Komponente. </span><span lang="en"> This field stores the <code>i</code>-component. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a38433x42482b43473t48">set</a>(X, Y, Z, I: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Komponenten und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the components and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a38433x42482b43473t4838433x4248">setPoint</a>(Point: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Felder auf die entsprechenden Werte von <code>Point</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the fields to the corresponding values of <code>Point</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a38433x42482b433r403x4431">clipI</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode wendet die imaginäre Komponente <code>I</code> in der perspektivischen Anpassung an und gibt <code>this</code> zurück. </span><span lang="en"> This method applies the imaginary component <code>i</code> in the perspective adaptation and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Matrix">
+		<legend><span><a name="472f3s2a353p48463x4c"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>(XX, XY, XZ, XI, YX, YY, YZ, YI, ZX, ZY, ZZ, ZI, IX, IY, IZ, II: <a href="#3649413q3t46">Number</a>)</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert einen vierdimensionale Transformationsmatrix. Die Konstrukteurargumente initialisieren die entsprechenden Komponenten. Wenn nicht alle davon angegeben werden, wird die Matrix auf die Einheitsmatrix gesetzt. </span><span lang="en"> This class defines a four-dimensional transformation-matrix. The constructor-arguments initiate the corresponding components. If not all of them are specified, the matrix will be set to the unit-matrix. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>(XX, XY, XZ, XI, YX, YY, YZ, YI, ZX, ZY, ZZ, ZI, IX, IY, IZ, II: <a href="#3649413q3t46">Number</a>): <a href="#373q3y3t3r48">Object</a> {</code><br>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b434c">x</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b434d">y</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b434e">z</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b433x">i</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t48">set</a>(XX, XY, XZ, XI, YX, YY, YZ, YI, ZX, ZY, ZZ, ZI, IX, IY, IZ, II: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t48313s">setId</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t482v3w3p3x42">setChain</a>(...: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t483b3r3p403t">setScale</a>(X, Y, Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t483b3r3p403t3g">setScaleX</a>(X: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t483b3r3p403t3h">setScaleY</a>(Y: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t483b3r3p403t3i">setScaleZ</a>(Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t48373u3u473t483g">setOffsetX</a>(X, Y, Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t48373u3u473t483g">setOffsetX</a>(X: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t48373u3u473t483h">setOffsetY</a>(Y: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t48373u3u473t483i">setOffsetZ</a>(Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t482t47443t3r48">setAspect</a>(X, Y, Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t482t47443t3r483g">setAspectX</a>(X: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t482t47443t3r483h">setAspectY</a>(Y: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t482t47443t3r483i">setAspectZ</a>(Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t483a43483p483t">setRotate</a>(X, Y, Z, A: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t483a43483p483t3g">setRotateX</a>(X: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t483a43483p483t3h">setRotateY</a>(Y: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t483a43483p483t3i">setRotateZ</a>(Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t48353p48463x4c">setMatrix</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b43473t482v4341413p423s">setCommand</a>(...: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#3649413q3t46">Number</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>&gt;</span>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b433p4444404d3c43">applyTo</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b433p4444404d3c4338433x4248">applyToPoint</a>(Target, Source: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a353p48463x4c2b433p4444404d3c43353p48463x4c">applyToMatrix</a>(Target, Source: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b434c">x</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den <code>X</code>-Zeilenvektor. </span><span lang="en"> This field stores the <code>x</code>-row-vector. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b434d">y</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den <code>Y</code>-Zeilenvektor. </span><span lang="en"> This field stores the <code>y</code>-row-vector. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b434e">z</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den <code>Z</code>-Zeilenvektor. </span><span lang="en"> This field stores the <code>z</code>-row-vector. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b433x">i</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den <code>I</code>-Zeilenvektor. </span><span lang="en"> This field stores the <code>i</code>-row-vector. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t48">set</a>(XX, XY, XZ, XI, YX, YY, YZ, YI, ZX, ZY, ZZ, ZI, IX, IY, IZ, II: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Komponenten und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the components and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t48313s">setId</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Einheitsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the unit-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t482v3w3p3x42">setChain</a>(...: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf das Produkt der Matrizen <code>...</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the product of the matrices <code>...</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t483b3r3p403t">setScale</a>(X, Y, Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Skalierungsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the scaling-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t483b3r3p403t3g">setScaleX</a>(X: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die X-Skalierungsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the x-scaling-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t483b3r3p403t3h">setScaleY</a>(Y: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Y-Skalierungsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the y-scaling-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t483b3r3p403t3i">setScaleZ</a>(Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Z-Skalierungsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the z-scaling-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t48373u3u473t483g">setOffsetX</a>(X, Y, Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Verschiebungsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the offset-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t48373u3u473t483g">setOffsetX</a>(X: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die X-Verschiebungsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the x-offset-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t48373u3u473t483h">setOffsetY</a>(Y: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Y-Verschiebungsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the y-offset-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t48373u3u473t483i">setOffsetZ</a>(Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Z-Verschiebungsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the z-offset-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t482t47443t3r48">setAspect</a>(X, Y, Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Perspektivmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the perspective-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t482t47443t3r483g">setAspectX</a>(X: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die X-Perspektivmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the x-perspective-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t482t47443t3r483h">setAspectY</a>(Y: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Y-Perspektivmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the y-perspective-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t482t47443t3r483i">setAspectZ</a>(Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Z-Perspektivmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the z-perspective-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t483a43483p483t">setRotate</a>(X, Y, Z, A: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Rotationsmatrix und gibt <code>this</code> zurück. Die Argumente <code>X</code>, <code>Y</code> und <code>Z</code> definieren die Rotationsachse und das Argument <code>A</code> definiert den Winkel. </span><span lang="en"> This method sets the matrix to the rotation-matrix and returns <code>this</code>. The arguments <code>X</code>, <code>Y</code> and <code>Z</code> defines the axis of rotation and the argument <code>A</code> defines the angle. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t483a43483p483t3g">setRotateX</a>(X: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die X-Rotationsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the x-rotation-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t483a43483p483t3h">setRotateY</a>(Y: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Y-Rotationsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the y-rotation-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t483a43483p483t3i">setRotateZ</a>(Z: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf die Z-Rotationsmatrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the z-rotation-matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t48353p48463x4c">setMatrix</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Komponenten auf die entsprechenden Werte von <code>Matrix</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method setzt components to the corresponding values of <code>Matrix</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b43473t482v4341413p423s">setCommand</a>(...: <a href="#2r">?</a><span class="jsdocG">&lt;<a href="#3b48463x423v">String</a>; <a href="#3649413q3t46">Number</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>&gt;</span>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf das Produkt der mit den Argumenten <code>...</code> definierten Matrizen und gibt <code>this</code> zurück. Die Argumentliste beschreibt eine Folge von Befehlen, von denen jeder aus einem Namen sowie bis zu 16 Argumenten besteht und eine Matrix definiert. Die verfügbaren Befehle sind: </span><span lang="en"> This method sets the matrix to  the product of the matrices described by the arguments <code>...</code> and returns <code>this</code>. The argument list describes a sequence of commands each of which consists of a name and up to 16 arguments, and defines a matrix. The available commands are: </span><table></tr><tr><th><code>'T'</code></th><td><span lang="de"> Dieser Befehl erwartet keine Argumente und referenziert die Matrix <code>this</code>. </span><span lang="en"> This command expects no arguments and references the Matrix <code>this</code>. </span></td></tr><tr><th><code>'D'</code></th><td><span lang="de"> Dieser Befehl erwartet 16 Zahlen als Argumente und erzeugt eine Matrix über die Methode <code>set()</code>. </span><span lang="en"> This command expects 16 numbers as arguments and produces a matrix via the method <code>set()</code>. </span></td></tr><tr><th><code>'S'</code></th><td><span lang="de"> Dieser Befehl erwartet drei Zahlen als Argumente und erzeugt eine Matrix über die Methode <code>setScale()</code>. </span><span lang="en"> This command expects three numbers as arguments and produces a matrix via the method <code>setScale()</code>. </span></td></tr><tr><th><code>'O'</code></th><td><span lang="de"> Dieser Befehl erwartet drei Zahlen als Argumente und erzeugt eine Matrix über die Methode <code>setOffset()</code>. </span><span lang="en"> This command expects three numbers as arguments and produces a matrix via the method <code>setOffset()</code>. </span></td></tr><tr><th><code>'A'</code></th><td><span lang="de"> Dieser Befehl erwartet drei Zahlen als Argumente und erzeugt eine Matrix über die Methode <code>setAspect()</code>. </span><span lang="en"> This command expects three numbers as arguments and produces a matrix via the method <code>setAspect()</code>. </span></td></tr><tr><th><code>'R'</code></th><td><span lang="de"> Dieser Befehl erwartet vier Zahlen als Argumente und erzeugt eine Matrix über die Methode <code>setRotate()</code>. </span><span lang="en"> This command expects four numbers as arguments and produces a matrix via the method <code>setRotate()</code>. </span></td></tr><tr><th><code>'M'</code></th><td><span lang="de"> Dieser Befehl erwartet eine Matrix als Argumente und erzeugt eine Matrix über die Methode <code>setMatrix()</code>. </span><span lang="en"> This command expects a matrix as arguments and produces a matrix via the method <code>setMatrix()</code>. </span></td></tr></table>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b433p4444404d3c43">applyTo</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix auf das Ergebnis der Multiplikation der Matrix mit <code>Matrix</code> (<code>this = this * Matrix</code>) und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix to the result of the multiplication of the matrix with <code>Matrix</code> (<code>this = this * Matrix</code>) and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b433p4444404d3c4338433x4248">applyToPoint</a>(Target, Source: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt <code>Target</code> auf das Ergebnis der Multiplikation der Matrix mit <code>Source</code> (<code>Target = this * (Source||Target)</code>) und gibt <code>this</code> zurück. Wenn <code>Source</code> nicht definiert ist, wird <code>Target</code> verwendet. </span><span lang="en"> This method sets <code>Target</code> to the result of the multiplication of the matrix with <code>Source</code> (<code>Target = this * (Source||Target)</code>) and returns <code>this</code>. If <code>Source</code> is not defined, <code>Target</code> is used. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a353p48463x4c2b433p4444404d3c43353p48463x4c">applyToMatrix</a>(Target, Source: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt <code>Target</code> auf das Ergebnis der Multiplikation der Matrix mit <code>Source</code> (<code>Target = this * (Source||Target)</code>) und gibt <code>this</code> zurück. Wenn <code>Source</code> nicht definiert ist, wird <code>Target</code> verwendet. </span><span lang="en"> This method sets <code>Target</code> to the result of the multiplication of the matrix with <code>Source</code> (<code>Target = this * (Source||Target)</code>) and returns <code>this</code>. If <code>Source</code> is not defined, <code>Target</code> is used. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Group">
+		<legend><span><a name="472f3s2a2z46434944"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; Groups: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[])</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert eine Szenengruppe zur Erstellung von Szenenbäumen. Die Konstrukteurargumente initialisieren die entsprechenden Felder. Eine Szenengruppe kann von mehreren Szenengruppen und Zeichenflächen gleichzeitig verwendet werden. </span><span lang="en"> This class defines a scene-group for creating scene-trees. The constructor-arguments initiate the correspondung fields. A scene-group can be used by multiple scene-groups and surfaces at the same time. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; Groups: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a> {</code><br>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3b3z3x4435433s3t2b43473z3x4435433s3t">skipMode</a>: <a href="#3649413q3t46">Number</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b4349473t462w3p483p">userData</a>: <a href="#373q3y3t3r48">Object</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2z464349442b43413p48463x4c">matrix</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2z464349442b433v4643494447">groups</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2z464349442b43433q3y3t3r4847">objects</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]<br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b43473t483d473t462w3p483p">setUserData</a>(UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a2u3p473t2b43473t483b3z3x4435433s3t">setSkipMode</a>(SkipMode: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2z464349442b43473t48">set</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; Groups: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]; UserData: <a href="#373q3y3t3r48">Object</a>; SkipMode: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2z464349442b43473t48353p48463x4c">setMatrix</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2z464349442b43473t482z4643494447">setGroups</a>(Groups: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2z464349442b43473t48373q3y3t3r4847">setObjects</a>(Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2z464349442b43473t482z46434944">setGroup</a>(Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2z464349442b43413p48463x4c">matrix</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Matrix, die zur Transformation der Punkte aller untergeordneten Szenenobjekte und Szenengruppen verwendet wird. </span><span lang="en"> This field stores the matrix, that is used to transform the points of all subordinated scene-objects and scene-groups. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2z464349442b433v4643494447">groups</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die untergeordneten Szenengruppen. </span><span lang="en"> This field stores the subordinated scene-groups. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2z464349442b43433q3y3t3r4847">objects</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die untergeordneten Szenenobjekte. </span><span lang="en"> This field stores the subordinated scene-objects. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2z464349442b43473t48">set</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; Groups: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]; UserData: <a href="#373q3y3t3r48">Object</a>; SkipMode: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix, die untergeordneten Szenengruppen, die untergeordneten Szenenobjekte, die Nutzerdaten sowie den Auslassmodus und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix, the subordinated scene-groups, the subordinated scene-objects, the user-data as well as the skip-mode and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2z464349442b43473t48353p48463x4c">setMatrix</a>(Matrix: <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Matrix und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the matrix and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2z464349442b43473t482z4643494447">setGroups</a>(Groups: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die untergeordneten Szenengruppen und gibt <code>this</code> zurück. </span><span lang="en"> This method setz the subordinated scene-groups and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2z464349442b43473t48373q3y3t3r4847">setObjects</a>(Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die untergeordneten Szenenobjekte und gibt <code>this</code> zurück. </span><span lang="en"> This method setz the subordinated scene-objects and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2z464349442b43473t482z46434944">setGroup</a>(Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Felder auf die entsprechenden Werte von <code>Group</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the fields to the corresponding values of <code>Group</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Object">
+		<legend><span><a name="472f3s2a373q3y3t3r48"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]; OnUpdate: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>)</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert ein Szenenobjekt. Die Konstrukteurargumente initialisieren die entsprechenden Felder. Eine Szenenobjekt kann von mehreren Szenengruppen gleichzeitig verwendet werden. </span><span lang="en"> This class defines a scene-object. The constructor-arguments initiate the correspondung fields. A scene-object can be used by multiple scene-groups at the same time. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]; OnUpdate: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a> {</code><br>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3b3z3x4435433s3t2b43473z3x4435433s3t">skipMode</a>: <a href="#3649413q3t46">Number</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b4349473t462w3p483p">userData</a>: <a href="#373q3y3t3r48">Object</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a373q3y3t3r482b4341433s3t40">model</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a373q3y3t3r482b4344433x424847">points</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a373q3y3t3r482b4343423d443s3p483t">onUpdate</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b43473t483d473t462w3p483p">setUserData</a>(UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a2u3p473t2b43473t483b3z3x4435433s3t">setSkipMode</a>(SkipMode: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a2u3p473t">Base</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a373q3y3t3r482b43473t48">set</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]; OnUpdate: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>; UserData: <a href="#373q3y3t3r48">Object</a>; SkipMode: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a373q3y3t3r482b43473t4835433s3t40">setModel</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a373q3y3t3r482b43473t4838433x424847">setPoints</a>(Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a373q3y3t3r482b43473t4837423d443s3p483t">setOnUpdate</a>(OnUpdate: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a373q3y3t3r482b43473t48373q3y3t3r48">setObject</a>(Object: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a373q3y3t3r482b4341433s3t40">model</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert das Model des Elementknoten. </span><span lang="en"> This field stores the model of the element-node. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a373q3y3t3r482b4344433x424847">points</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Punkte. </span><span lang="en"> This field stores the points. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a373q3y3t3r482b4343423d443s3p483t">onUpdate</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Ereignisempfänger, der beim Zeichnen ausgelöst wird und die Position des Szenenobjekt in der Zeichenreihenfolge zurück geben soll. Wenn die zurück gegebene Position zu <code>NaN</code> evaluiert, wird das Szenenobjekt nicht angezeigt. </span><span lang="en"> This field stores the event-listener, that is triggered while drawing and that should return the position of the scene-object in the draw-order. If the returned position evaluates to <code>NaN</code>, the scene-object will not be shown. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a373q3y3t3r482b43473t48">set</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]; OnUpdate: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>; UserData: <a href="#373q3y3t3r48">Object</a>; SkipMode: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt das Model des Elementknoten, die Punkte, den Ereignisempfänger, die Nutzerdaten sowie den Auslassmodus und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the model of the element-node, the points, the event-listener , the user-data as well as the skip-mode and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a373q3y3t3r482b43473t4835433s3t40">setModel</a>(Model: <a href="#472f3s">s3d</a>.<a href="#472f3s2a35433s3t40">Model</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt das Model des Elementknoten gibt <code>this</code> zurück. </span><span lang="en"> This method sets the model of the element-node and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a373q3y3t3r482b43473t4838433x424847">setPoints</a>(Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Punkte und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the points and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a373q3y3t3r482b43473t4837423d443s3p483t">setOnUpdate</a>(OnUpdate: <a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Ereignisempfänger und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the event-listener and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a373q3y3t3r482b43473t48373q3y3t3r48">setObject</a>(Object: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Felder auf die entsprechenden Werte von <code>Object</code> und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the fields to the corresponding values of <code>Object</code> and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Canvas">
+		<legend><span><a name="472f3s2a2v3p424a3p47"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a>(Width, Height, Index: <a href="#3649413q3t46">Number</a>; Surfaces: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[])</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert eine Leinwand, die mehrere Zeichenflächen besitzen und eine davon anzeigen kann. Die Konstrukteurargumente initialisieren die entsprechenden Felder. </span><span lang="en"> This class defines a canvas that owns multiple surfaces and that can show one of them. The constructor-arguments initiate the correspondung fields. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a>(Width, Height, Index: <a href="#3649413q3t46">Number</a>; Surfaces: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> {</code><br>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b4349473t462w3p483p">userData</a>: <a href="#373q3y3t3r48">Object</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b4342433s3t">node</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b434b3x3s483w">width</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b433w3t3x3v3w48">height</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b433x423s3t4c">index</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b434749463u3p3r3t47">surfaces</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]<br></code>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b43473t483d473t462w3p483p">setUserData</a>(UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b43473t48">set</a>(Width, Height, Index: <a href="#3649413q3t46">Number</a>; Surfaces: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]; UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b43473t483f3x3s483w">setWidth</a>(Width: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b43473t48303t3x3v3w48">setHeight</a>(Height: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b43473t4831423s3t4c">setIndex</a>(Index: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b43473t483b49463u3p3r3t47">setSurfaces</a>(Surfaces: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b43473t482v3p424a3p47">setCanvas</a>(Canvas: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b433r403t3p46">clear</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p424a3p472b4349443s3p483t">update</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b4342433s3t">node</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Elementknoten. </span><span lang="en"> This field stores the element-node. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b434b3x3s483w">width</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die relative Breite der Leinwand. </span><span lang="en"> This field stores the relative width of the canvas. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b433w3t3x3v3w48">height</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die relative Höhe der Leinwand. </span><span lang="en"> This field stores the relative height of the canvas. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b433x423s3t4c">index</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Index der aktiven Zeichenfläche. </span><span lang="en"> This field stores the index of the active surface. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b434749463u3p3r3t47">surfaces</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Zeichenflächen. </span><span lang="en"> This field stores the surfaces. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b43473t48">set</a>(Width, Height, Index: <a href="#3649413q3t46">Number</a>; Surfaces: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]; UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die relative Breite, die relative Höhe, den Index der aktiven Zeichenfläche und die Zeichenflächen, aktualisiert die Leinwand und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the relative width, the relative height, the index of the active surface and the surfaces, updates the canvas and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b43473t483f3x3s483w">setWidth</a>(Width: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die relative Breite der Leinwand, aktualisiert die Leinwand und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the relative width of the canvas, updates the canvas and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b43473t48303t3x3v3w48">setHeight</a>(Height: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die relative Höhe der Leinwand, aktualisiert die Leinwand und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the relative height of the canvas, updates the canvas and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b43473t4831423s3t4c">setIndex</a>(Index: <a href="#3649413q3t46">Number</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Index der aktiven Zeichenfläche, aktualisiert die Leinwand und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the index of the active surface, updates the canvas and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b43473t483b49463u3p3r3t47">setSurfaces</a>(Surfaces: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Zeichenflächen, aktualisiert die Leinwand und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the surfaces, updates the canvas and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b43473t482v3p424a3p47">setCanvas</a>(Canvas: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Felder auf die entsprechenden Werte von <code>Canvas</code>, aktualisiert die Leinwand und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the fields to the corresponding values of <code>Canvas</code>, updates the canvas and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b433r403t3p46">clear</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode leert die Leinwand und gibt <code>this</code> zurück. </span><span lang="en"> This method clears the canvas and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p424a3p472b4349443s3p483t">update</a>(): <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p424a3p47">Canvas</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode zeigt die aktive Zeichenfläche an und gibt <code>this</code> zurück. </span><span lang="en"> This method shows the active surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.Surface">
+		<legend><span><a name="472f3s2a3b49463u3p3r3t"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>(Id: <a href="#3b48463x423v">String</a>; Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>; Virtual, NoClip, NoJoin, NoSkip: <a href="#2u4343403t3p42">Boolean</a>)</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert eine Zeichenfläche, die eine Szenengruppe anzeigen kann. Die Konstrukteurargumente initialisieren die entsprechenden Felder. Eine Zeichenfläche kann nicht von mehreren Leinwänden gleichzeitig verwendet werden. </span><span lang="en"> This class defines a surface that can show a scene-group. The constructor-arguments initiate the correspondung fields. A surface can not be used by multiple canvases at the same time. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>(Id: <a href="#3b48463x423v">String</a>; Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>; Virtual, NoClip, NoJoin, NoSkip: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a> {</code><br>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b433x3s">id</a>: <a href="#3b48463x423v">String</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b4342433s3t">node</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b433v46434944">group</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b434a3x4648493p40">virtual</a>: <a href="#2u4343403t3p42">Boolean</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b4342432v403x44">noClip</a>: <a href="#2u4343403t3p42">Boolean</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43424332433x42">noJoin</a>: <a href="#2u4343403t3p42">Boolean</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b4342433b3z3x44">noSkip</a>: <a href="#2u4343403t3p42">Boolean</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b433r3p3r3w3t">cache</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t">CacheSurface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b4349473t3a3t3u">useRef</a>: <a href="#3b48463x423v">String</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b433u3x40403a3t3u">fillRef</a>: <a href="#3b48463x423v">String</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43473t48">set</a>(Id: <a href="#3b48463x423v">String</a>; Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>; Virtual, NoClip, NoJoin, NoSkip: <a href="#2u4343403t3p42">Boolean</a>; UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43473t48313s">setId</a>(Id: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43473t482z46434944">setGroup</a>(Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43473t483e3x4648493p40">setVirtual</a>(Virtual: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43473t4836432v403x44">setNoClip</a>(NoClip: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43473t48364332433x42">setNoJoin</a>(NoJoin: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43473t4836433b3z3x44">setNoSkip</a>(NoSkip: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b43473t483b49463u3p3r3t">setSurface</a>(Surface: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b433r403t3p46">clear</a>(Cache: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b49463u3p3r3t2b4349443s3p483t">update</a>(Cache: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b433x3s">id</a>: <a href="#3b48463x423v">String</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Identifikator der Zeichenfläche. Im nicht-virtuellen Referenzmodus kann der Elementknoten über <code>'r_'+id</code> und im virtuellen Referenzmodus über <code>'v_'+id</code> identifiziert werden. </span><span lang="en"> This field stores the identifier of the surface. In the not-virtual reference-mode the element-node can be identified via <code>'r_'+id</code> and in the virtual reference-mode via <code>'v_'+id</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b4342433s3t">node</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Elementknoten. </span><span lang="en"> This field stores the element-node. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b433v46434944">group</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Szenengruppe als Wurzel des Scenenbaumes. </span><span lang="en"> This field stores the scene-group as root of the scene-tree. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b434a3x4648493p40">virtual</a>: <a href="#2u4343403t3p42">Boolean</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Referenzmodus. Wenn es <code>true</code> ist, wird der Elementknoten über <code>surfaceVirtualModel</code> erstellt, anderenfalls wird er über <code>surfaceRealModel</code> erstellt. </span><span lang="en"> This field stores the reference-mode. If it is <code>true</code>, the element-node will be created via <code>surfaceVirtualModel</code>, otherwise it is created via <code>surfaceRealModel</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b4342432v403x44">noClip</a>: <a href="#2u4343403t3p42">Boolean</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert das Perspektivverbot. Wenn es <code>true</code> ist, sind perspektivische Transformationen deaktiviert. Transformationen sind im Modus <code>true</code> schneller. </span><span lang="en"> This field stores the perspective-prohibition. If it is <code>true</code>, perspective transformations are deactivated. Transformations are faster in mode <code>true</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43424332433x42">noJoin</a>: <a href="#2u4343403t3p42">Boolean</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert das Vereinigungsverbot. Wenn es <code>true</code> ist, werden alle Punkte transformiert und Punkte mit gleichen Komponenten nicht zusammengefasst, d.h sie werden nicht durch einen einzigen Punkt und eine einzige Transformation vertreten. Transformationen sind im Modus <code>false</code> schneller, Manipulationen an den Komponenten von Punkten können jedoch zu unerwartetem Verhalten führen. </span><span lang="en"> This field stores the join-prohibition. If it is <code>true</code>, all points will be transformed and points with equal components will not be joined, i.e. they will not be represented by a single point in a single transformation. Transformations are faster in mode <code>false</code>, but manipulations on components of points can cause unexpected behavior. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b4342433b3z3x44">noSkip</a>: <a href="#2u4343403t3p42">Boolean</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert das Auslassverbot. Wenn es <code>true</code> ist, werden die Auslassmodi der Szenengruppen und Szenenobjekte ignoriert. </span><span lang="en"> This field stores the skip-prohibition. If it is <code>true</code>, the skip-modes of scene-groups and scene-objects will be ignored. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b433r3p3r3w3t">cache</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t">CacheSurface</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Cache der Zeichenfläche. </span><span lang="en"> This field stores the cache of the surface. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b4349473t3a3t3u">useRef</a>: <a href="#3b48463x423v">String</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Referenz auf die Zeichenfläche für das <code>xlink:href</code>-Attribut eines <code>SVGUseElement</code>-Elementknotens. </span><span lang="en"> This field stores the reference to the surface for the <code>xlink:href</code>-attribute of a <code>SVGUseElement</code>-element-node. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b433u3x40403a3t3u">fillRef</a>: <a href="#3b48463x423v">String</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Referenz auf die Zeichenfläche für das <code>fill</code>-Attribut eines füllbaren Elementknotens. </span><span lang="en"> This field stores the reference to the surface for the <code>fill</code>-attribute of a fillable element-node. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43473t48">set</a>(Id: <a href="#3b48463x423v">String</a>; Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>; Virtual, NoClip, NoJoin, NoSkip: <a href="#2u4343403t3p42">Boolean</a>; UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Identifikator der Zeichenfläche, die Szenengruppe, den Referenzmodus, das Perspektiv-, das Vereinigungs- sowie das Auslassverbot, aktualisiert die Referenzen auf die Zeichenfläche, den Elementknoten, den Cache und die Zeichenfläche und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the identifier of the surface, the scene-group, the refernence-mode, the perspective-, the join- and the skip-prohibition, updates the element-node, the references to the surface, the cahe and the surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43473t48313s">setId</a>(Id: <a href="#3b48463x423v">String</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Identifikator der Zeichenfläche, aktualisiert die Referenzen auf die Zeichenfläche und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the identifier of the surface, updates the references to the surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43473t482z46434944">setGroup</a>(Group: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2z46434944">Group</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Szenengruppe, aktualisiert den Cache sowie die Zeichenfläche und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the scene-group, updates the cahe as well as the surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43473t483e3x4648493p40">setVirtual</a>(Virtual: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt den Referenzmodus, aktualisiert den Elementknoten sowie die Zeichenfläche und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the reference-mode, updates the element-node as well as the surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43473t4836432v403x44">setNoClip</a>(NoClip: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt das Perspektivverbot, aktualisiert die Zeichenfläche und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the perspective-prohibition, updates the surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43473t48364332433x42">setNoJoin</a>(NoJoin: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt das Vereinigungsverbot, aktualisiert den Cache sowie die Zeichenfläche und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the join-prohibition, updates the cache as well as the surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43473t4836433b3z3x44">setNoSkip</a>(NoSkip: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt das Auslassverbot, aktualisiert die Zeichenfläche und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the skip-prohibition, updates the surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b43473t483b49463u3p3r3t">setSurface</a>(Surface: <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Felder auf die entsprechenden Werte von <code>Surface</code>, aktualisiert die Referenzen auf die Zeichenfläche, den Elementknoten, den Cache und die Zeichenfläche und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the fields to the corresponding values of <code>Surface</code>, updates references to the surface, the element-node, the cache and the surface and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b433r403t3p46">clear</a>(Cache: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode leert die Zeichenfläche und gibt <code>this</code> zurück. Wenn <code>Cache</code> <code>true</code> ist, wird auch der Cache geleert. </span><span lang="en"> This method clears the surface and returns <code>this</code>. If <code>Cache</code> is <code>true</code> also the cache will be cleared. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b49463u3p3r3t2b4349443s3p483t">update</a>(Cache: <a href="#2u4343403t3p42">Boolean</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b49463u3p3r3t">Surface</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode aktualisiert die Zeichenfläche und gibt <code>this</code> zurück. Wenn <code>Cache</code> <code>true</code> ist, wird auch der Cache aktualisiert. Sie sollte mit <code>false</code> aufgerufen werden, nachdem die Komponenten einer Matrix im Szenenbaum oder die Komponenten eines Punktes eines Szenenobjektes verändert wurden. Sie sollte mit <code>true</code> aufgerufen werden, nachdem die Struktur des Szenenbaumes, das Model eines Elementknoten oder die Punkte eines Szenenobjektes verändert wurden. </span><span lang="en"> This method updates the surface and returns <code>this</code>. If <code>Cache</code> is <code>true</code> also the cache will be updated. It should be called with <code>false</code>, after the components of a matrix in the scene-tree or the components of a point of a scene-object were changed. It should be called with <code>true</code>, after the structure of the scene-tree, the node-model or the points of a scene-object were changed. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.CacheObject">
+		<legend><span><a name="472f3s2a2v3p3r3w3t373q3y3t3r48"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>(Index: <a href="#3649413q3t46">Number</a>; Object: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[])</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert eine optimierte Zugriffsstruktur auf ein zu verarbeitendes Szenenobjek im Cache einer Zeichenfläche. Die Konstrukteurargumente initialisieren die entsprechenden Felder. Der Elementknoten wird mit über <code>s3d.Model.toNode()</code> aus dem Model des Szenenobjektes berechnet. </span><span lang="en"> This class defines an optimised access-structure on a scene-object to be processed in the cache of a surface. The constructor-arguments initiate the correspondung fields. The element-node is created via <code>s3dModel.toNode()</code> out of the model of the scene-object. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>(Index: <a href="#3649413q3t46">Number</a>; Object: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a> {</code><br>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3b3z3x4435433s3t2b43473z3x4435433s3t">skipMode</a>: <a href="#3649413q3t46">Number</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t373q3y3t3r482b4342433s3t">node</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t373q3y3t3r482b433x423s3t4c">index</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t373q3y3t3r482b4343463s3t46">order</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t373q3y3t3r482b43433q3y3t3r48">object</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t373q3y3t3r482b4344433x424847">points</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]<br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t373q3y3t3r482b4342433s3t">node</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den, durch das Model des Szenenobjektes beschriebenen Elementknoten. </span><span lang="en"> This field stores the element-node, described by the model of the scene-object. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t373q3y3t3r482b433x423s3t4c">index</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Objektindex. </span><span lang="en"> This field stores the object-index. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t373q3y3t3r482b4343463s3t46">order</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Ebenenindex, der zusammen mit dem Objektindex die Zeichenreihenfolge bestimmt. </span><span lang="en"> This field stores the layer-index that together with the object-index determines the draw-order . </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t373q3y3t3r482b43433q3y3t3r48">object</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a373q3y3t3r48">Object</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert das Szenenobjekt. </span><span lang="en"> This field stores the scene-object. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t373q3y3t3r482b4344433x424847">points</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die transformierten Punkten des Szenenobjektes. </span><span lang="en"> This field stores the transformed points of the scene-object. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.CacheSurface">
+		<legend><span><a name="472f3s2a2v3p3r3w3t3b49463u3p3r3t"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t">CacheSurface</a>(Skips: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>&gt;</span>[]; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>&gt;</span>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>[]; Matrices: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>&gt;</span>[])</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert einen optimierte Zugriffsstruktur auf die während der Aktualisierung einer Zeichenfläche zu verarbeitenden Objekte und Operationen. Die Konstrukteurargumente initialisieren die entsprechenden Felder. </span><span lang="en"> This class defines an optimised access-structure on the objects and operations to be processed while updating a surface. The constructor-arguments initiate the correspondung fields. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t">CacheSurface</a>(Skips: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>&gt;</span>[]; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>&gt;</span>[]; Objects: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>[]; Matrices: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>&gt;</span>[]): <a href="#373q3y3t3r48">Object</a> {</code><br>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t2b43473z3x4447">skips</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>&gt;</span>[]<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t2b4344433x424847">points</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>&gt;</span>[]<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t2b43433q3y3t3r4847">objects</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>[]<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t3b49463u3p3r3t2b43413p48463x3r3t47">matrices</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>&gt;</span>[]<br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t3b49463u3p3r3t2b43473z3x4447">skips</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>&gt;</span>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Operation zur Erzeugung der resultierenden Auslassmodi. </span><span lang="en"> This field stores the operations for generating the resulting skip-modes. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t3b49463u3p3r3t2b4344433x424847">points</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>&gt;</span>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Operation zur Transformation von Punkten. </span><span lang="en"> This field stores the operations for transforming points. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t3b49463u3p3r3t2b43433q3y3t3r4847">objects</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t373q3y3t3r48">CacheObject</a>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Cacheszenenobjekte. </span><span lang="en"> This field stores the cache-scene-objects. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t3b49463u3p3r3t2b43413p48463x3r3t47">matrices</a>: <a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;<a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>; <a href="#472f3s">s3d</a>.<a href="#472f3s2a353p48463x4c">Matrix</a>&gt;</span>[]</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Operation zur Transformation von Matrizen. </span><span lang="en"> This field stores the operations for transforming matrices. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.CacheOperation">
+		<legend><span><a name="472f3s2a2v3p3r3w3t37443t463p483x4342"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;GParent; GValue&gt;</span>(Parent: GParent; Source, Target: GValue)</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert eine Operation. Die Konstrukteurargumente initialisieren die entsprechenden Felder. </span><span lang="en"> This class defines an operation. The constructor-arguments initiate the correspondung fields. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a2v3p3r3w3t37443t463p483x4342">CacheOperation</a><span class="jsdocG">&lt;GParent; GValue&gt;</span>(Parent: GParent; Source, Target: GValue): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a> {</code><br>
+					<code class="jsdocI">&nbsp;&nbsp;+ <a href="#472f3s2a3b3z3x4435433s3t2b43473z3x4435433s3t">skipMode</a>: <a href="#3649413q3t46">Number</a> // <a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t37443t463p483x43422b43443p463t4248">parent</a>: GParent<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t37443t463p483x43422b43474349463r3t">source</a>: GValue<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t37443t463p483x43422b43483p463v3t48">target</a>: GValue<br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a2v3p3r3w3t37443t463p483x43422b43473z3x442v43494248">skipCount</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t37443t463p483x43422b43443p463t4248">parent</a>: GParent</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Elternwert. </span><span lang="en"> This field stores the parent-value. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t37443t463p483x43422b43474349463r3t">source</a>: GValue</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Quellwert. </span><span lang="en"> This field stores the source-value. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t37443t463p483x43422b43483p463v3t48">target</a>: GValue</span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Zielwert. </span><span lang="en"> This field stores the target-value. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a2v3p3r3w3t37443t463p483x43422b43473z3x442v43494248">skipCount</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Anzahl der nachfolgenden auszulassenden Operationen. </span><span lang="en"> This field stores the number of subsequent operations to be skipped. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.UserData">
+		<legend><span><a name="472f3s2a3d473t462w3p483p"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a>()</span></legend>
+		<div>
+			<span lang="de"> Diese Schnittstelle definiert die Nutzerdateneigenschaft. </span><span lang="en"> This interface defines the user-data-property. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a>(): <a href="#373q3y3t3r48">Object</a> {</code><br>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b4349473t462w3p483p">userData</a>: <a href="#373q3y3t3r48">Object</a><br></code>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3d473t462w3p483p2b43473t483d473t462w3p483p">setUserData</a>(UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3d473t462w3p483p2b4349473t462w3p483p">userData</a>: <a href="#373q3y3t3r48">Object</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert die Nutzerdaten. </span><span lang="en"> This field stores the user-data. </span>
+						</div>
+					</fieldset>
+				</div>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3d473t462w3p483p2b43473t483d473t462w3p483p">setUserData</a>(UserData: <a href="#373q3y3t3r48">Object</a>): <a href="#472f3s">s3d</a>.<a href="#472f3s2a3d473t462w3p483p">UserData</a></span></legend>
+						<div>
+							<span lang="de"> Diese Methode setzt die Nutzerdaten und gibt <code>this</code> zurück. </span><span lang="en"> This method sets the user-data and returns <code>this</code>. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.SkipMode">
+		<legend><span><a name="472f3s2a3b3z3x4435433s3t"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>()</span></legend>
+		<div>
+			<span lang="de"> Diese Schnittstelle definiert die Auslassmoduseigenschaft. Der Wert dieser Eigenschaft kann eine beliebige Kombination der Markierungen <code>s3d.SKIP_CALC</code> und <code>s3d.SKIP_DRAW</code> sein. </span><span lang="en"> This interface defines the skip-mode-property. The value of this property can be an arbitrary combination of the flags <code>s3d.SKIP_CALC</code> and <code>s3d.SKIP_DRAW</code>. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a3b3z3x4435433s3t">SkipMode</a>(): <a href="#373q3y3t3r48">Object</a> {</code><br>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a3b3z3x4435433s3t2b43473z3x4435433s3t">skipMode</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a3b3z3x4435433s3t2b43473z3x4435433s3t">skipMode</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Dieses Feld speichert den Auslassmodus. </span><span lang="en"> This field stores the skip-mode. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+<div class="jsdocC">
+	<fieldset name="s3d.OnUpdateMethod">
+		<legend><span><a name="472f3s2a37423d443s3p483t353t483w433s"></a><a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>()</span></legend>
+		<div>
+			<span lang="de"> Diese Klasse definiert den Ereignisempfänger eines Szenenobjektes. </span><span lang="en"> This class defines the event-listener of a scene-object. </span>
+		</div>
+		<div class="jsdocO">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div>
+					<code><a href="#472f3s">s3d</a>.<a href="#472f3s2a37423d443s3p483t353t483w433s">OnUpdateMethod</a>(): <a href="#2y49423r483x4342">Function</a> {</code><br>
+					<code>&nbsp;&nbsp;+ <a href="#472f3s2a37423d443s3p483t353t483w433s2b3u">(</a>Node: <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]<a href="#472f3s2a37423d443s3p483t353t483w433s2b3u">)</a>: <a href="#3649413q3t46">Number</a><br></code>
+					<code>}</code><br>
+				</div>
+			</fieldset>
+		</div>
+		<div class="jsdocD">
+			<fieldset>
+				<legend><span><i></i></span></legend>
+				<div class="jsdocM">
+					<fieldset>
+						<legend><span>+ <a name="472f3s2a37423d443s3p483t353t483w433s2b3u">(</a>Node: <a href="#472f3s">s3d</a>.<a href="#472f3s2a36433s3t">Node</a>; Points: <a href="#472f3s">s3d</a>.<a href="#472f3s2a38433x4248">Point</a>[]<a name="472f3s2a37423d443s3p483t353t483w433s2b3u">)</a>: <a href="#3649413q3t46">Number</a></span></legend>
+						<div>
+							<span lang="de"> Der Aufrufoperator wird mit dem Szenenobjekt als Kontext <code>this</code>, dem durch das Model des Szenenobjektes erstellten Knoten <code>Node</code> und den transformierten Punkten <code>Points</code> des Szenenobjektes aufgerufen und soll die Position des Szenenobjektes in der Zeichenreihenfolge zurück geben. Wenn die zurück gegebene Position zu <code>NaN</code> evaluiert, wird das Szenenobjekt nicht angezeigt. </span><span lang="en"> The call-operator will be called with the scene-object as context <code>this</code>, the node <code>Node</code> created out of the model of the scene-object and the transformed points <code>Points</code> of the scene-object and should return the position of the scene-object in the draw-order. If the returned position evaluates to <code>NaN</code>, the scene-object will not be shown. </span>
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<!-- ----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=---- -->
+
+	</body>
+</html>
