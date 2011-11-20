@@ -1,6 +1,6 @@
 s3d - svg 3D - [cc-by] Sebastian Rostock
 Dieses Werk ist unter einem Creative Commons Namensnennung 3.0 Deutschland Lizenzvertrag lizenziert. Um die Lizenz anzusehen, gehen Sie bitte zu:  [ http://creativecommons.org/licenses/by/3.0/de/ ] oder schicken Sie einen Brief an:  [ Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA. ]
 
-Diese Bibliothek Namensraum definiert einige Klassen zur Erstellung von animierbaren 3D-Szenen mit SVG. Sie hängt von der Bibliothek "pc" ab.
+Diese Bibliothek definiert einige Klassen zur Erstellung von animierbaren 3D-Szenen mit SVG. Sie hängt von der Bibliothek "pc" ab.
 
 This library defines some classes for creating animatable 3D-scenes with SVG. It depends on the library "pc".
