@@ -134,7 +134,7 @@ Zum Schluss werden die Jetztwerte der Vektoren zur Berechnung der Matrix der Sze
 		surface.update();
 	}, 50);
 
-Alles zusammen sieht dann so aus: [demo/s3d-demo.html](demo/s3d-demo.html "s3d-demo.html")
+Alles zusammen sieht dann so aus: [javascript.s3d/blob/master/demo/s3d-demo.html](javascript.s3d/blob/master/demo/s3d-demo.html "s3d-demo.html")
 
 ---
 
@@ -267,7 +267,7 @@ Finally, the now-values of the vectors are used to calculate the matrix of the s
 		surface.update();
 	}, 50);
 
-All together looks like that: [demo/s3d-demo.html](demo/s3d-demo.html "s3d-demo.html")
+All together looks like that: [javascript.s3d/blob/master/demo/s3d-demo.html](javascript.s3d/blob/master/demo/s3d-demo.html "s3d-demo.html")
 
 ---
 
