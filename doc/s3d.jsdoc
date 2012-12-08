@@ -156,7 +156,7 @@ function onMouseEnterCanvas(evt){
 	@|</p><p>|
 	@de|Alles zusammen sieht dann so aus:|
 	@en|All together looks like that:|
-	@|<a href=""s3d-demo.html"">s3d-demo.html</a>.|
+	@|<a href=""../demo/s3d-demo.html"">s3d-demo.html</a>.|
 	@|</p>|
 	+ (): s3d // pcNS
 	- names: String[]{}

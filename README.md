@@ -134,6 +134,8 @@ Zum Schluss werden die Jetztwerte der Vektoren zur Berechnung der Matrix der Sze
 		surface.update();
 	}, 50);
 
+Alles zusammen sieht dann so aus: [demo/s3d-demo.html](demo/s3d-demo.html "s3d-demo.html")
+
 ---
 
 ### ENGLISH
@@ -264,6 +266,8 @@ Finally, the now-values of the vectors are used to calculate the matrix of the s
 		polygonMatrix.setCommand('R',0,0,1,vectors[1][0]*6.28,'R',0,1,0,vectors[2][0]*6.28,'R',1,0,0,vectors[3][0]*6.28,'S',s,s,s);
 		surface.update();
 	}, 50);
+
+All together looks like that: [demo/s3d-demo.html](demo/s3d-demo.html "s3d-demo.html")
 
 ---
 
