@@ -1,5 +1,5 @@
-﻿/** pc - prototype class - [cc-by] 2010 Sebastian Rostock **/
-/** Dieses Werk ist unter einem Creative Commons Namensnennung 3.0 Deutschland Lizenzvertrag lizenziert. Um die Lizenz anzusehen, gehen Sie bitte zu:  [ http://creativecommons.org/licenses/by/3.0/de/ ] oder schicken Sie einen Brief an:  [ Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA. ] **/
+﻿/** pc - Prototype Class - [cc-by] 2007 Sebastian Rostock (bee-creative@gmx.de) **/
+/** Dieses Werk ist unter einem Creative Commons Namensnennung 3.0 Deutschland Lizenzvertrag lizenziert. **/
 
 function pc(){ // (): pcNS<pc>
 	var id=0;
@@ -104,14 +104,14 @@ function pc(){ // (): pcNS<pc>
 	pc.MapToString=function(Map){ // (Map: Object{}): String
 		if(!Map)return 'null';
 		var list=[];
-		for(var key in Map)list.push(pc.spcTextToString(key)+':'+pc.spcTextToString(String(Map[key])));
+		for(var key in Map)list.push(pc.TextToString(key)+':'+pc.TextToString(String(Map[key])));
 		return (list.length?'{\n  '+list.join(',\n  ')+'\n}':'{}');
 	};
 	pc.ListToString=function(List){ // (List: Object[]): String
 		return (List?(List.length?'[\n  '+List.join(',\n').replace(/\n/g,'\n  ')+'\n]':'[]'):'null');
 	};
 	pc.TextToString=function(Text){ // (String: String): String
-		return (Text?'\''+Text.replace(/(['"\\])/g,'\\$1').replace(/\t/g,'\\t').replace(/\n/g,'\\n')+'\'':((Text=='')?'\'\'':'null'));
+		return (Text?'\''+Text.replace(/(['"\\])/g,'\\$1').replace(/\t/g,'\\t').replace(/\r/g,'\\r').replace(/\n/g,'\\n')+'\'':((Text=='')?'\'\'':'null'));
 	};
 	return pc;
 }

@@ -1,6 +1,6 @@
 # s3d - svg 3D
 
-	[cc-by] Sebastian Rostock (bee-creative@gmx.de)
+	[cc-by] 2008 Sebastian Rostock (bee-creative@gmx.de)
 
 ---
 
@@ -267,6 +267,6 @@ Finally, the now-values of the vectors are used to calculate the matrix of the s
 
 ---
 
-##### [cc-by] Sebastian Rostock ( bee-creative@gmx.de )
+##### [cc-by] 2008 Sebastian Rostock ( bee-creative@gmx.de )
 
-Dieses Werk ist unter einem Creative Commons Namensnennung 3.0 Deutschland Lizenzvertrag lizenziert. Um die Lizenz anzusehen, gehen Sie bitte zu: [ http://creativecommons.org/licenses/by/3.0/de/ ] oder schicken Sie einen Brief an: [ Creative Commons, 171 Second Street, Suite 300, San Francisco, California 94105, USA. ]
+Dieses Werk ist unter einem Creative Commons Namensnennung 3.0 Deutschland Lizenzvertrag lizenziert.
